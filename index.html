@@ -2,9 +2,55 @@
 <html>
 <head>
   <title>Rock Paper Scissors</title>
+  <h1>Make Your Choice!</h1>
+  <div>
+      <p>Rock! <button id = 'rock'>Choose Rock</button></p>
+      <p>Paper! <button id = 'paper'>Choose Paper</button></p>
+      <p>Scissors! <button id = 'scissors'>Choose Scissors</button></p>
+  </div>
+  <div id= 'scoreTable'>
+      <table>
+          <tr>
+              <th>Player Wins</th>
+              <th>Computer Wins</th>
+              <th>Draws</th>
+          </tr>
+          <tr>
+              <td id='playerWinsOutput'>0</td>
+              <td id='computerWinsOutput'>0</td>
+              <td id='drawsOutput'>0</td>
+          </tr>
+      </table>
+  </div>
 </head>
 <body>
   <script>
+
+      let playerWins = 0;
+      let computerWins = 0;
+      let draws = 0;
+
+      function updateScores() {
+          let w = document.getElementById('playerWinsOutput');
+          let l = document.getElementById('computerWinsOutput');
+          let d = document.getElementById('drawsOutput');
+
+          if(playerWins >=5) {
+              alert('You win! Congratulations!');
+              playerWins = 0;
+              computerWins = 0;
+              draws = 0;
+          } else if (computerWins >=5) {
+              alert('You lose! Better luck next time!');
+              playerWins = 0;
+              computerWins = 0;
+              draws = 0;
+          }
+
+          w.textContent = playerWins;
+          l.textContent = computerWins;
+          d.textContent = draws;
+      }
         function computerPlay(){
             let computerRand = Math.floor(3*Math.random());
             switch (computerRand) {
@@ -26,52 +72,52 @@
             if(playerSelection == 'rock') {
                 switch(computerSelection) {
                     case 'rock' :
-                    return 'Draw! Rock ties with rock';
+                    draws++;
                     break;
 
                     case 'paper':
-                    return 'You lose! Paper beats rock';
+                    computerWins++;
                     break;
 
                     case 'scissors':
-                    return 'You win! Rock beats scissors';
+                    playerWins++;
                     break;
                     }
             } else if(playerSelection =='paper') {
                     switch(computerSelection) {
                         case 'rock':
-                        return 'You win! Paper beats rock';
+                        playerWins++;
                         break;
 
                         case 'paper':
-                        return 'Draw! Paper ties with paper';
+                        draws++;
                         break;
 
-                        case 'sciossors': 
-                        return 'You lose! Scissors beat paper';
+                        case 'scissors': 
+                        computerWins++;
                         break;
                     }
             } else if(playerSelection =='scissors') {
                     switch(computerSelection) {
                         case 'rock': 
-                        return 'You lose! Rock beats scissors';
+                        computerWins++;
                         break;
 
                         case 'paper': 
-                        return 'You win! Scissors beat paper';
+                        playerWins++;
                         break;
 
                         case 'scissors': 
-                        return 'Tie! Scissors tie with scissors';
+                        draws++;
                         break;
                     }
             } else {
-                return 'Whoops! Something went wrong!'
+                alert('Error - check your code!');
                 }
-                    
+            updateScores();
         }
 
-        function game() {
+ /*       function game() {
             let playerWins = 0;
             let computerWins = 0;
             for(let i=0; i<5; i++){
@@ -93,7 +139,28 @@
             } else{
                 alert('Draw! Rematch?');
             }
-        }
+        }*/
+
+    let rockbtn = document.querySelector('#rock');
+    let scissorsbtn = document.querySelector('#scissors');
+    let paperbtn = document.querySelector('#paper'); 
+    
+
+    rockbtn.addEventListener('click' , function () {
+        let computerSelection = computerPlay();
+        playRound('rock', computerSelection);
+    })
+
+    scissorsbtn.addEventListener('click' , function () {
+        let computerSelection = computerPlay();
+        playRound('scissors', computerSelection);
+    })
+
+    paperbtn.addEventListener('click' , function () {
+        let computerSelection = computerPlay();
+        playRound('paper', computerSelection);
+    })
+
   </script>
 </body>
 </html>
